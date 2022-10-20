@@ -8,6 +8,7 @@ class Producto:
     # _atributo > atributo PROTEGIDO en python más que todo funciona para cuando queremos utilizar este atributo con herencia
     self._precio_mayorista = 100
 
+
   def generar_venta(self, fecha, cliente, cantidad):
     #antes de agregar la venta validar si aun tenemos stock para dicha venta
     # TODO: primero ver si tenemos ventas, si hay iteramos esas ventas y sacamos cuanto de cantidad hemos vendido.Luego ver si ese número es menor que la cantidad total (el atributo cantidad) si es mayor indicar que YA hemos sobregitrado las ventas.
@@ -18,9 +19,12 @@ class Producto:
       'cliente': cliente,
       'cantidad': cantidad
     }
+    if(self.cantidad >= venta):
+      
     self.__ventas.append(venta)
 
     print('venta registrada exitosamente')
+
 
   def mostrar_ventas(self):
     # retornar las ventas registradas de ese producto
