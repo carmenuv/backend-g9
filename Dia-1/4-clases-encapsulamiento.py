@@ -11,24 +11,28 @@ class Producto:
 
   def generar_venta(self, fecha, cliente, cantidad):
     #antes de agregar la venta validar si aun tenemos stock para dicha venta
-    # TODO: primero ver si tenemos ventas, si hay iteramos esas ventas y sacamos cuanto de cantidad hemos vendido.Luego ver si ese número es menor que la cantidad total (el atributo cantidad) si es mayor indicar que YA hemos sobregitrado las ventas.
-    #por último a esa cantidad de productos vendidos sumar la cantdad entrante y ver si es menor o igual que la cantidad total, si lo es entonces generar la venta, caso contrario, no permitir la venta e indicar que no hay stock suficiente
+    # TODO: primero ver si tenemos ventas, si hay iteramos esas ventas y sacamos cuanto de cantidad hemos vendido.Luego ver si ese número es menor que la cantidad total (el atributo cantidad) 
+    # si es mayor indicar que YA hemos sobregitrado las ventas.
+    #por último a esa cantidad de productos vendidos sumar la cantdad entrante y ver si es menor o igual que la cantidad total, si lo es entonces generar la venta, caso contrario, 
+    # no permitir la venta e indicar que no hay stock suficiente
     # si es que no hay el saldo suficiente indicar cuanto es lo que tenemos para vender (miercoles 26)
     venta = {
       'fecha': fecha,
       'cliente': cliente,
       'cantidad': cantidad
     }
-    if(self.cantidad >= venta):
-      
+
     self.__ventas.append(venta)
-
-    print('venta registrada exitosamente')
-
+    print(self.__sacar_igv(self.precio))
+    print('Venta registrada exitosamente')
 
   def mostrar_ventas(self):
     # retornar las ventas registradas de ese producto
     return self.__ventas
+
+  def __sacar_igv(self, precio):
+    # Este método pasa a ser privado desde que le ponemos '__' al inicio del nombre
+    return (precio * 1.18) - precio
 
 
 detergente = Producto(nombre='Detergente Sapito', precio=4.50, cantidad=50)
@@ -41,3 +45,7 @@ detergente.generar_venta(fecha='2022-10-30', cliente='Franco Portugal', cantidad
 detergente.generar_venta(fecha='2022-11-02', cliente='Michelle Ordoñez', cantidad=15)
 
 print(detergente.mostrar_ventas())
+
+
+# no se puede acceder al método __sacar_igv desde que es un método privado
+# print(detergente.__sacar_igv(80.00))

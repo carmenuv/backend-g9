@@ -1,0 +1,3 @@
+# Replicar la funcionalidad de la librería CamelCase
+# HINT: los strings en python son considerados listas
+# texto ='eduardo' > texto[0] = 'e'...
