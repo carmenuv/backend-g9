@@ -11,9 +11,11 @@ class Producto:
 
   def generar_venta(self, fecha, cliente, cantidad):
     #antes de agregar la venta validar si aun tenemos stock para dicha venta
-    # TODO: primero ver si tenemos ventas, si hay iteramos esas ventas y sacamos cuanto de cantidad hemos vendido.Luego ver si ese número es menor que la cantidad total (el atributo cantidad) 
+    # TODO: primero ver si tenemos ventas, si hay iteramos esas ventas y sacamos cuanto de cantidad hemos vendido.
+    # Luego ver si ese número es menor que la cantidad total (el atributo cantidad) 
     # si es mayor indicar que YA hemos sobregitrado las ventas.
-    #por último a esa cantidad de productos vendidos sumar la cantdad entrante y ver si es menor o igual que la cantidad total, si lo es entonces generar la venta, caso contrario, 
+    # por último a esa cantidad de productos vendidos sumar la cantdad entrante y ver si es menor o igual que la cantidad total, 
+    # si lo es entonces generar la venta, caso contrario, 
     # no permitir la venta e indicar que no hay stock suficiente
     # si es que no hay el saldo suficiente indicar cuanto es lo que tenemos para vender (miercoles 26)
     venta = {
@@ -22,9 +24,17 @@ class Producto:
       'cantidad': cantidad
     }
 
-    self.__ventas.append(venta)
-    print(self.__sacar_igv(self.precio))
-    print('Venta registrada exitosamente')
+    if (self.__ventas == []):      
+      self.__ventas.append(venta)
+      queda = self.cantidad - cantidad
+      # print(self.__sacar_igv(self.precio))
+      print('Venta registrada exitosamente')
+    else:
+      for ventas in self.__ventas:
+          print(cantidad)
+    
+
+
 
   def mostrar_ventas(self):
     # retornar las ventas registradas de ese producto
