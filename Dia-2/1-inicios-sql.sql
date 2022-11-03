@@ -57,3 +57,59 @@ INSERT INTO alumnos VALUES
                     (DEFAULT, 'Jair', 'MASCULINO', DEFAULT, '34598746', '1995-04-09');
 
 SELECT * FROM alumnos;
+
+-- NOTA: SIEMPRE EN LOS UPDATES Y DELETES TENEMOS QUE EJECUTARLOS CON UNA CONDICIONAL
+-- DELETE
+DELETE FROM alumnos WHERE id>=10 AND id <=12;
+
+SELECT * FROM alumnos;
+
+-- UPDATE tabla SET columna='Nuevo valor' WEHRE condicional
+UPDATE alumnos SET nombre='Marimar' WHERE id = 8;
+UPDATE alumnos SET num_documento = '99564879', nombre = 'Rodrigo' WHERE id= 9 ;
+
+SELECT * FROM alumnos;
+
+INSERT INTO alumnos (nombre, sexo, num_documento, fecha_nacimiento) VALUES
+					('Maria aLEJANDRA', 'BINARIX', '49596785', '1995-06-19');
+                    
+SELECT * FROM alumnos;
+
+-- 1. Mostrar todos los alumnos que tengan C.E.
+SELECT * FROM alumnos WHERE tipo_documento = 'C.E.';
+
+-- 2. Mostrar a todos los alumnos que tengan SEXO MASCULINO O FEMENINO
+SELECT * FROM alumnos WHERE sexo = 'MASCULINO' OR sexo = 'FEMENINO';
+SELECT * FROM alumnos WHERE sexo in ('MASCULINO', 'FEMENINO');
+
+-- 3. Mostrar a todos los alumnos que nacieron antes del 1990-01-01
+SELECT * FROM alumnos WHERE fecha_nacimiento < '1990-01-01';
+
+-- Dame todos los alumnos cuyo nombre contenga la letra a
+SELECT nombre FROM alumnos WHERE nombre like '%a%';
+
+-- Dame todos los alumnos cuya ultima letra sea la a
+-- Con la propiedad BINARY le indicamos que haga la comparacion a nivel de binarios 
+SELECT nombre FROM alumnos WHERE nombre LIKE BINARY '%A';
+SELECT nombre FROM alumnos WHERE nombre like '%a';
+
+SELECT nombre FROM alumnos WHERE nombre LIKE '%d%u%';
+
+-- Dame todos los alumnos cuya segunda letra sea la o
+SELECT nombre FROM alumnos WHERE nombre LIKE '_o%';
+
+-- SELECT nombre FROM alumnos WHERE nombre LIKE 'E__%'; (E al inicio y dos espacios después)
+SELECT nombre FROM alumnos WHERE nombre LIKE '%d%u%';
+SELECT nombre FROM alumnos WHERE nombre LIKE '%d_u%';
+
+-- 4. Mostrar todos los alumnos cuyo nombre tenga al menos la letra 'n'
+SELECT nombre FROM alumnos WHERE nombre LIKE '%n%';
+
+-- 5. Mostrar todos los alumnos cuyo segundo dígito del documento sea '8'
+SELECT num_documento FROM alumnos WHERE num_documento LIKE '_8%';
+
+-- 6. Mostrar todos los alumnos cuyo sexo contenga la letra 'i' seguido de una letra cualquiera y luego la letra 'o'
+SELECT sexo FROM alumnos WHERE sexo LIKE '%i_o';
+
+-- (cualquier parte tenga la i y la última tenga 0)
+SELECT sexo FROM alumnos WHERE sexo LIKE '%i%o'; 
