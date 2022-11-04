@@ -1,5 +1,5 @@
 from flask import Flask, request
-# request > toda la información que puedo leer del usuario, dentro de ella tendremos el body
+# request > toda la información que puedo leer del usuario, dentro de ella tendremos el body.
 from datetime import datetime
 from flask_cors import CORS
 
@@ -10,10 +10,10 @@ usuarios = [{
 }]
 
 
-# __name__ > variable propia de python, muestra si el archivo es el archivo principal del proyecto, mostrará el valor de '__main__' y si no entonces mostrará otro valor
+# __name__ > variable propia de python, muestra si el archivo es el archivo principal del proyecto, mostrará el valor de '__main__' y si no entonces mostrará otro valor.
 print(__name__)
 app = Flask(__name__)
-# DECLARAR LOS CORS (Intercambio de recursos de orrigen compartido)
+# DECLARAR LOS CORS (Intercambio de recursos de orrigen compartido).
 CORS(app)
 
 #decorador
