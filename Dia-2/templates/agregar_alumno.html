@@ -46,9 +46,24 @@
         aria-describedby="emailHelp"
       />
     </div>
+    <!-- En el formulario de agregar alumno, agregar un input para el curso, en ese input debe ser un dropDown o un checkBox en el cual se muestre todos los cursos que hay en la base de datos. Al momento de crear el alumno enviar en el body el curso_id con el id del curso seleccionado. NOTA: El curso es opcional  -->
+    <div class="mb-3">
+      <label for="curso" class="form-label">Curso</label>
+      <select class="form-select" aria-label="Default select example">
+        <option selected>Open this select menu</option>
+        <option value="1">One</option>
+        <option value="2">Two</option>
+        <option value="3">Three</option>
+      </select>
+    </div>
     <button type="submit" class="btn btn-primary" id="btn_agregar">
       Agregar
     </button>
   </form>
 </div>
+{% endblock %}
+{% block scripts %}
+{# <script src="../static/js/agregar_alumno.js"></script> #}
+{# para agregar archivos js, css o imágenes es recomnedable utilizar el stament url_for en el cual se indica qué tipo de archivo y además su nombre de archivo #}
+<script src="{{ url_for('static', filename='js/agregar_alumno.js') }}"></script>
 {% endblock %}
