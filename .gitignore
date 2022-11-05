@@ -1,3 +1,4 @@
 # este es un comentario
 entorno_*
 # en el archivo gitignore podemos usar patrones usando el * indicaremos que no nos intersa que viene ahí, solamente que ignore lo que viene antes o después
+.env
