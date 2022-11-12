@@ -137,7 +137,7 @@ class UsuarioController(Resource):
             # si no hay usuario emitiremos un error
             if usuarioEcontrado is None:
                 raise Exception('Usuario no existe')
-            # asi eliminamo el usuario de la base de datos
+            # asi eliminamos el usuario de la base de datos
             conexion.session.delete(usuarioEcontrado)
             # aquí confirmamos la eliminación de manera permanente
             conexion.session.commit()
