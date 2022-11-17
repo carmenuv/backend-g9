@@ -5,4 +5,4 @@
 
 ## Este será el repositorio del curso por las siguientes 10 semanas
 
-Toda la información la podrás encontrar aquí y en los links dados por el Discord
+Toda la información la podrás encontrar aquí y en los links dados por el Discord.
