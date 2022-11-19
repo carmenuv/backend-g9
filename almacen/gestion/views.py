@@ -1,9 +1,10 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.request import Request
-from rest_framework.generics import ListAPIView, ListCreateAPIView
-from .serializers import PruebaSerializer
+from rest_framework.generics import ListAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework import status
+from .serializers import PruebaSerializer, DepartamentoSerializer
+from .models import DepartamentoModel
 
 # request > es la información que me llega desde el cliente
 # https://www.django-rest-framework.org/api-guide/views/#api_view
@@ -72,3 +73,16 @@ class PruebaApiView(ListCreateAPIView):
       return Response(data={
         'message': 'Usuario registrado exitosamente'
       }, status=status.HTTP_201_CREATED)
+
+class DepartamentosApiView(ListCreateAPIView):
+  # serializer_class > encargado de validar la info entrante y convertirla a un tipo de dato válido de Python y además devolver la info
+  serializer_class = DepartamentoSerializer
+  # queryset > comando para extraer la información
+  # SELECT * FROM departamentos;
+  queryset = DepartamentoModel.objects.all()
+
+class DepartamentoApiView(RetrieveUpdateDestroyAPIView):
+  serializer_class = DepartamentoSerializer
+  queryset = DepartamentoModel.objects.all()
+
+# TODO: Realizar el crud pero ahora con los almacenes
