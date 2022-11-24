@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import DepartamentoModel
+from .models import DepartamentoModel, AlmacenModel
 
 class PruebaSerializer(serializers.Serializer):
   # un serializador es el que transformará la info entrante y saliente
@@ -15,3 +15,8 @@ class DepartamentoSerializer(serializers.ModelSerializer):
     # voy a utilizar todas las columnas menos la columna 'nombre'
     # exclude = ['nombre']
     # NOTA: No se usa las dos, o se usa 'fields' o se usa 'exclude'
+
+class AlmacenSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = AlmacenModel
+    fields = '__all__'
