@@ -11,7 +11,7 @@ class PlatoModel(models.Model):
   id = models.AutoField(primary_key=True, null=False, unique=True)
   nombre = models.CharField(max_length=50, null=False)
   # FloatField > se utiliza un tipo de dato nativo de python que seria el float
-  precio = models.DecimalField(null=False)
+  precio = models.DecimalField(null=False, max_digits=5, decimal_places=1)
   disponibilidad = models.BooleanField(default=True)
   # auto_now_add > datetime y sirve para indicar que se guarde la hora y fecha actual del servidor cuando se cree un nuevo registro
   # https://docs.djangoproject.com/en/4.1/ref/models/fields/#datefield
@@ -22,7 +22,7 @@ class PlatoModel(models.Model):
     # ordenar por el precio descendiente
     ordering = ['-precio']
 
-class UsuiarioModel(AbstractBaseUser, PermissionsMixin):
+class UsuarioModel(AbstractBaseUser, PermissionsMixin):
   # PermissionsMixin > Me sirve para poder modificar los permisos que tendrá este usuario al momento de crearse por los comandos (python manage.py createsuperuser)
   id = models.AutoField(primary_key=True, unique=True)
   nombre = models.CharField(max_length=50, null=False)
@@ -37,7 +37,9 @@ class UsuiarioModel(AbstractBaseUser, PermissionsMixin):
   # utilizamos los siguientes atributos si queremos seguir trabajando con el panel administrativo
   is_staff = models.BooleanField(default=False)
   # is_active > para saber si sigue activo trabajando en la empresa
-  is_active = models.DateTimeField(auto_now_add=True, db_column='created_at')
+  is_active = models.BooleanField(default=True)
+
+  createdAt =models.DateTimeField(auto_now_add=True, db_column='created_at')
 
   objects = UsuarioManager()
 
