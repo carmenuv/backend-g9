@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'gestion',
     'corsheaders', # para trabajar con el uso de los cors
+    'rest_framework', # sirve para que django rest-framwork pueda devolver la información por el navegador usando css y js
 ]
 
 MIDDLEWARE = [
