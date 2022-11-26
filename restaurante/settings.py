@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path
 from os import environ
 from dotenv import load_dotenv
+from datetime import timedelta
 
 load_dotenv()
 
@@ -134,3 +135,22 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-user-model
 # Sirve para indicar cuál serpa el modelo que utilizaremos para el auth_user en nuestra bd
 AUTH_USER_MODEL = 'gestion.UsuarioModel'
+
+# la libreria Django RestFranework utilizará todas las configuraciones que definamos en esta variable para este proyecto
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        # indicamos que la libreria de autenticación que va a utilizar DRF para poder autenticar al usuario entrante será de la librería simplejwt que acabamos de instalar
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        ],
+}
+
+# Sirve para modificar todas las configuraciones de la libreria simple-jwt
+# para más información: https://django-rest-framework-simplejwt.readthedocs.io/en/latest/settings.html
+SIMPLE_JWT = {
+    # La token de acceso tendrá la duración de 1d, 1h, 30min y 5seg
+    'ACCESS_TOKEN_LIFETIME': timedelta(days= 1, hours=1, minutes=30, seconds=5),
+    # Es la firma que se utilizará para firmar y verificar  las tokens
+    'SIGNING_KEY': environ.get('TOKEN_SECRET'),
+    # Es el nombre con el cual se guardará en el payload el id del usuario
+    'USER_ID_CLAIM': 'id_del_usuario'
+}
