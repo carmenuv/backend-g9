@@ -11,7 +11,10 @@ from .serializers import UsuarioSerializer, PlatoSerializer
 # https://www.django-rest-framework.org/api-guide/permissions/
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework.decorators import api_view
 from .permissions import SoloAdmin
+# Para utilizar las raw queries (consulta directa a la base de datos sin utilizar el ORM)
+from django.db import connection
 
 
 class RegistroUsuarioApiView(CreateAPIView):
@@ -105,6 +108,7 @@ class PlatoUpdateApiView(UpdateAPIView):
   permission_classes = [ IsAuthenticated ]
 
 class VistaProtegidaPlatosApiView(ListAPIView):
+
   queryset = PlatoModel.objects.all()
   serializer_class = PlatoSerializer
   # Autentication indica la forma que se utilizara para autenticar, en este caso no necesitamos indicar ningun autentication ya que estamos utilizando la libreria simple-jwt, este seria su valor por defecto que esta indicado en el archivo settings.py
@@ -125,4 +129,27 @@ class VistaProtegidaPlatosApiView(ListAPIView):
         'id': request.user.id,
         'correo': request.user.correo
       }
+    })
+
+@api_view(http_method_names=['GET'])
+def mostrar_usuarios_raw(request):
+  with connection.cursor() as cursor:
+    # Al utilizar un SP, cuncion, vista o algo que no se haya definido en los modelos en el ORM, la única forma de utilizarlo desde el backend es mediante una raw query
+    cursor.execute("CALL DevolverTodosLosUsuarios()")
+    resultado = cursor.fetchall()
+    # print(resultado)
+    # Ahora mapeariamos el resultado
+    for usuario in resultado:
+      print(usuario[3]) # nombre
+
+    # Este sería el caso en el cual nosotros queremos utilizar un SP que devuelva cierta información con un parámetro OUT
+    cursor.execute("CALL DevolverUsuariosSegunTipo('ADMIN', @usuarioId)")    
+    cursor.execute('SELECT @usuarioId')
+    # fetchone() > devolverá la primera fila de todo el resultado
+    # fetchall() > devolverá todos los registros
+    # fetchmany(registros) > devolver la cantidad de reigistros indicada
+    resultado2 = cursor.fetchone()
+    print(resultado2)
+    return Response(data={
+      'message': 'Procedimiento almacenado ejecutado exitosamente'
     })
