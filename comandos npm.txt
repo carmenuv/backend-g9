@@ -1,0 +1,5 @@
+npm init              > genera un formulario para crear el archivo package.json
+npm install PACKAGE   > instala la libreria en su version más reciente
+npm unistall PACKAGE  > desinstala la libreria y la retira de las dependencias
+npm run COMANDO       > ejecuta el comando registrado en la sección de script
+npx CLI               > podré utilizar el cli de la librería que he instalado
