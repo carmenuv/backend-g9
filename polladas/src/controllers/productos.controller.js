@@ -26,4 +26,129 @@ export const crearProducto = async (req,res) => {
     message: "Error al crear el producto",
   });
 }
-}
+};
+
+export const listarProductos = async (req,res) => {
+  try{
+    const productos = await Prisma.producto.findMany()
+
+    return res.status(200).json({
+      message: "Productos encontrados",
+      content: productos
+    })
+  } catch (error) {
+    return res.status(500).json({
+    message: "Error en el servidor",
+    error: error.message
+    });
+  }
+};
+
+export const traerProductoPorId = async (req,res) => {
+  // console.log(req)
+  // params.id
+  const {id} = req.params;
+  try{
+    const producto = await Prisma.producto.findUnique({
+      where: {
+        id: Number(id),
+      },
+    });
+    if(!producto) {
+      return res.status(404).json({
+        message: "Producto no encontrado"
+      });
+    }
+    return res.status(200).json({
+      message: "Producto encontrado",
+      content: producto
+    })
+  } catch (error){
+    return res.status(500).json({
+      message: "Error en el servidor",
+      error: error.message
+    });
+  }
+};
+
+export const actualizarProducto = async (req,res) => {
+  const {id} = req.params;
+  const data = req.body
+  try {
+    const findProduct = await Prisma.producto.findUnique({
+      where: {
+        id: Number(id),
+      }
+    });
+    if(!findProduct) {
+      return res.status(404).json({
+        message: "Producto no encontrado"
+      });
+    }
+    const producto = await Prisma.producto.update({
+      where: {
+        id: Number(id),
+      },
+      data: {
+        nombre: data.nombre,
+        cantidad: data.cantidad,
+        precio: data.precio,
+        disponibilidad: data.disponibilidad
+      },
+      // información que queremos que retorne
+      select: {
+        id: true,
+        nombre: true,
+        cantidad: true,
+        precio: true
+      }
+    });
+    return res.status(201).json({
+      message: "Producto actualizado",
+      content: producto,
+    })
+  } catch (error) {
+    return res.status(500).json({
+      message: "Error en el servidor",
+      error: error.message
+    });
+  }
+};
+
+export const eliminarProducto = async (req,res) => {
+  const {id} = req.params;
+  try{
+    const findProduct = await Prisma.producto.findUnique({
+      where: {
+        id: Number(id)
+      }
+    });
+    if (!findProduct){
+      return res.status(404).json({
+        message: "Producto no encontrado",
+      });
+    }
+    const producto = await Prisma.producto.update({
+      where: {
+        id: Number(id),
+      },
+      data: {
+        disponibilidad: false,
+      },
+      select:{
+        id: true,
+        nombre: true,
+        disponibilidad: true,
+      },
+    });
+    return res.status(200).json({
+      message: "Producto eliminado",
+      content: producto,
+    })
+  }catch(error){
+    return res.status(500).json({
+      message: "Error en el servidor",
+      error: error.message
+    });
+  }
+};
