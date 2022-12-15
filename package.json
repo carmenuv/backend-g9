@@ -5,6 +5,7 @@
   "main": "index.js",
   "type": "module",
   "dependencies": {
+    "crypto-js": "^4.1.1",
     "express": "^4.18.2",
     "mongoose": "^6.8.0"
   },
