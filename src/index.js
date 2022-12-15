@@ -29,4 +29,5 @@ servidor.listen(5000, async ()=>{
   } catch(e){
     console.log("Error al conectarse a la base de datos");
   }
+  
 })
