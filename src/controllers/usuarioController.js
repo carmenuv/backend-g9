@@ -1,5 +1,6 @@
 import { Usuario } from "../models/usuarioModel.js";
 import bcryptjs from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 export async function registro(req, res){
   const data = req.body;
@@ -32,13 +33,46 @@ export async function login(req, res){
     });
   }  
   if (bcryptjs.compareSync(data.password, usuarioEncontrado.password)) {
+    // es la contraseña del usuario
+    const playload = {
+      // jti = id
+      jti: usuarioEncontrado._id,
+      nombre: usuarioEncontrado.nombre,
+    };
+
+    const token = jwt.sign(playload, process.env.JWT_SECRET, { 
+      expiresIn: "1h"
+    });
+
     res.json({
       message: "Bienvenido",
+      content: token,
     });
   } else {
     res.json({
       message: "Error al ingresar, la contraseña no es valida",
     });
   }
+}
+
+export async function perfil(req, res){
+  console.log(req.user);
+  // seleccionamos solamente el nombre del usuario indicando las columnas separadas por espacio y la que no se le coloca un signo negativo (-)
+  // const usuarioEncontrado = await Usuario.findById(req.user._id).select('nombre email direcciones'); // -_id"
+
+  // Estamos utilizando una función de agregación para sleccionar el usuario con sus agendas y además evitar mostrar el password pero solamente el usuario cuyo id sea el de req.user
+  const usuarioEncontrado = await Usuario.aggregate()
+  .lookup({
+    from: 'agendas',
+    localField: "agendas",
+    foreignField: "_id",
+    as: "agendas",
+  })
+  .match({_id: req.user._id})
+  .project("-password");
+
+  res.json({
+    content: usuarioEncontrado,
+  });
 }
 
